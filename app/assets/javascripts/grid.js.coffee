@@ -37,6 +37,6 @@ class window.Grid
 
   drawBorder: ->
     line = new Kinetic.Line({points: [0,0,0,@height, 0,0,@width,0, @width,0,@width,@height, 0,@height,@width,@height],
-    stroke: '#B5D8EB', strokeWidth:2 })
+    stroke: '#B1B1AF', strokeWidth:2 })
     @layer.add line
 

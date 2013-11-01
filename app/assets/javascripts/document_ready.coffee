@@ -5,6 +5,7 @@
 $(document).ready ->
   viewController = new ViewController('view')
   viewController.draw()
+  viewController.setHandlers()
 
 
 
