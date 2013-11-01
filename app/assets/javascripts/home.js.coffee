@@ -1,14 +1,15 @@
-
-
 class Grid
-  constructor: (@width, @height, @ctx)->
+  constructor: (width, height)->
     @increment = 10
-    @setLineColor()
+    @resetBounds(width, height)
 
-  setLineColor: ->
+  resetBounds: (width, height) ->
+    @width = width
+    @height = height
+
+  draw: (ctx) ->
+    @ctx = ctx
     @ctx.strokeStyle = '#B4D6D7'
-
-  draw: ->
     @ctx.beginPath()
     @drawHorizontalLines()
     @drawVerticalLines()
@@ -32,28 +33,37 @@ class Grid
       hPosition += 40
       break if hPosition > @width
 
-  drawVerticalLine: (hPosition) ->
+  drawVerticalLine: (hPosition, ctx) ->
     @ctx.moveTo(hPosition+0.5, 0)
     @ctx.lineTo(hPosition+0.5, @width)
 
 
 class View
-  constructor: (@width, @height) ->
-    @canvas = $('#view').get(0)
-    @canvas.width = @width
-    @canvas.height = @height
-    @ctx = @canvas.getContext('2d')
+  constructor: ->
+    @resetBounds()
     @elements = []
+
+  canvas: ->
+    $('#view').get(0)
+
+  ctx: ->
+    @canvas().getContext('2d')
+
+  # for now just make the view the window size
+  resetBounds: ->
+    @width = $(window).width()
+    @height = $(window).height()
+    @canvas().width = @width
+    @canvas().height = @height
 
   draw: ->
     for i in @elements
-      i.draw()
+      i.draw(@ctx())
 
 class ViewController
   constructor: ->
-    @view = new View($(window).width(), $(window).height())
-    @ctx = @view.ctx
-    @grid = new Grid(@view.width, @view.height, @ctx)
+    @view = new View
+    @grid = new Grid(@view.width, @view.height)
     @addElement(@grid)
 
   addElement: (element) ->
@@ -62,9 +72,18 @@ class ViewController
   draw: ->
     @view.draw()
 
+  windowResized: ->
+    @view.resetBounds()
+    @grid.resetBounds(@view.width, @view.height)
+    @view.draw()
+
 $(document).ready ->
   viewController = new ViewController
   viewController.draw()
 
+  $(window).resize ->
+    viewController.windowResized()
+ 
+    
 
 
