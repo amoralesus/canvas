@@ -9,10 +9,9 @@ class window.View
   ctx: ->
     @canvas().getContext('2d')
 
-  # for now just make the view the window size
   resetBounds: ->
-    @width = $(window).width()
-    @height = $(window).height()
+    @width = $('#view').width()
+    @height = $('#view').height()
     @canvas().width = @width
     @canvas().height = @height
 

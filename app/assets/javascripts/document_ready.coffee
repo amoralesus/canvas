@@ -15,3 +15,4 @@ $(document).ready ->
 
   $(window).resize ->
     viewController.windowResized()
+
