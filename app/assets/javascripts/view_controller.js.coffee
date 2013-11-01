@@ -14,3 +14,11 @@ class window.ViewController
     @view.resetBounds()
     @grid.resetBounds(@view.width, @view.height)
     @view.draw()
+
+  setHandlers: ->
+    $(window).resize =>
+      @windowResized()
+
+    $('#line').click =>
+      @view.newLine()
+      false

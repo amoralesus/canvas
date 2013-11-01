@@ -18,3 +18,6 @@ class window.View
   draw: ->
     for i in @elements
       i.draw(@ctx())
+
+  newLine: ->
+    alert(@ctx())
