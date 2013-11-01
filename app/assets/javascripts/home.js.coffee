@@ -1,17 +1,48 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
 
-class Rect
-  constructor: (@ctx, @x1, @y1, @x2, @y2) ->
+
+class Grid
+  constructor: (@width, @height, @ctx)->
+    @increment = 10
+    @setLineColor()
+
+  setLineColor: ->
+    @ctx.strokeStyle = '#B4D6D7'
 
   draw: ->
-    @ctx.fillStyle = "rgb(200,0,0)"
-    @ctx.fillRect(@x1, @y1, @x2, @y2)
+    @ctx.beginPath()
+    @drawHorizontalLines()
+    @drawVerticalLines()
+    @ctx.stroke()
+
+  drawHorizontalLines: ->
+    vPosition = 0
+    loop
+      @drawHorizontalLine(vPosition)
+      vPosition += 40
+      break if vPosition > @height
+
+  drawHorizontalLine: (vPosition) ->
+    @ctx.moveTo(0,vPosition+0.5)
+    @ctx.lineTo(@width, vPosition+0.5)
+
+  drawVerticalLines: ->
+    hPosition = 0
+    loop
+      @drawVerticalLine(hPosition)
+      hPosition += 40
+      break if hPosition > @width
+
+  drawVerticalLine: (hPosition) ->
+    @ctx.moveTo(hPosition+0.5, 0)
+    @ctx.lineTo(hPosition+0.5, @width)
+
 
 class View
-  constructor: ->
-    @ctx = $('#view').get(0).getContext('2d')
+  constructor: (@width, @height) ->
+    @canvas = $('#view').get(0)
+    @canvas.width = @width
+    @canvas.height = @height
+    @ctx = @canvas.getContext('2d')
     @elements = []
 
   draw: ->
@@ -20,8 +51,10 @@ class View
 
 class ViewController
   constructor: ->
-    @view = new View
+    @view = new View($(window).width(), $(window).height())
     @ctx = @view.ctx
+    @grid = new Grid(@view.width, @view.height, @ctx)
+    @addElement(@grid)
 
   addElement: (element) ->
     @view.elements.push element
@@ -31,8 +64,6 @@ class ViewController
 
 $(document).ready ->
   viewController = new ViewController
-  rect = new Rect(viewController.ctx, 10, 10, 100, 200)
-  viewController.addElement(rect)
   viewController.draw()
 
 
