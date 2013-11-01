@@ -16,8 +16,8 @@ class window.View
     @canvas().height = @height
 
   draw: ->
+    alert(@elements.length)
     for i in @elements
       i.draw(@ctx())
 
-  newLine: ->
-    alert(@ctx())
+

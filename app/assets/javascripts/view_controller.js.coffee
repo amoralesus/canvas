@@ -19,6 +19,12 @@ class window.ViewController
     $(window).resize =>
       @windowResized()
 
-    $('#line').click =>
-      @view.newLine()
+    $('#new_line_button').click =>
+      x1 = $('#x1').val()
+      y1 = $('#y1').val()
+      x2 = $('#x2').val()
+      y2 = $('#y2').val()
+      line = new Line(x1, y1, x2, y2)
+      @addElement(line)
+      @windowResized()
       false

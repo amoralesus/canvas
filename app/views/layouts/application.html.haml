@@ -7,7 +7,4 @@
     = csrf_meta_tags
 
   %body
-    #top_navbar
-      = button_to 'Line', '#', :class => 'nav_button', :id => 'line'
-      #top_content
-        = yield
+    = yield
