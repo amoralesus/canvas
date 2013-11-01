@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require kinetic-v4.7.2.min
 //= require_tree .
 //
 

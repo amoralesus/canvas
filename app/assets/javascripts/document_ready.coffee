@@ -3,9 +3,8 @@
 # hopefully that will not be an issue
 
 $(document).ready ->
-  viewController = new ViewController
+  viewController = new ViewController('view')
   viewController.draw()
-  viewController.setHandlers()
 
 
 

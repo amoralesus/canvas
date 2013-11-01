@@ -1,6 +1,6 @@
 class window.ViewController
-  constructor: ->
-    @view = new View
+  constructor: (divId)->
+    @view = new View(divId)
     @grid = new Grid(@view.width, @view.height)
     @addElement(@grid)
 
@@ -26,5 +26,4 @@ class window.ViewController
       y2 = $('#y2').val()
       line = new Line(x1, y1, x2, y2)
       @addElement(line)
-      @windowResized()
       false

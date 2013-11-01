@@ -7,13 +7,11 @@ class window.Grid
     @width = width
     @height = height
 
-  draw: (ctx) ->
-    @ctx = ctx
-    @ctx.strokeStyle = '#B5D8EB'
-    @ctx.beginPath()
+  drawOn:(layer) ->
+    @layer = layer
     @drawHorizontalLines()
     @drawVerticalLines()
-    @ctx.stroke()
+    @drawBorder()
 
   drawHorizontalLines: ->
     vPosition = 0
@@ -23,8 +21,8 @@ class window.Grid
       break if vPosition > @height
 
   drawHorizontalLine: (vPosition) ->
-    @ctx.moveTo(0,vPosition+0.5)
-    @ctx.lineTo(@width, vPosition+0.5)
+    line = new Kinetic.Line({points: [0, vPosition+0.5, @width, vPosition+0.5], stroke: '#B5D8EB', strokeWidth: 1})
+    @layer.add line
 
   drawVerticalLines: ->
     hPosition = 0
@@ -33,7 +31,12 @@ class window.Grid
       hPosition += @increment
       break if hPosition > @width
 
-  drawVerticalLine: (hPosition, ctx) ->
-    @ctx.moveTo(hPosition+0.5, 0)
-    @ctx.lineTo(hPosition+0.5, @width)
+  drawVerticalLine: (hPosition) ->
+    line = new Kinetic.Line({points: [hPosition+0.5, 0, hPosition+0.5, @height], stroke: '#B5D8EB', strokeWidth: 1})
+    @layer.add line
+
+  drawBorder: ->
+    line = new Kinetic.Line({points: [0,0,0,@height, 0,0,@width,0, @width,0,@width,@height, 0,@height,@width,@height],
+    stroke: '#B5D8EB', strokeWidth:2 })
+    @layer.add line
 
