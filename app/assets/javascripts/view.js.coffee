@@ -3,6 +3,9 @@ class window.View
     @divId = divId
     @elements = []
 
+  addElement: (element) ->
+    @elements.push element
+
   width: ->
     $("##{@divId}").width()
 
